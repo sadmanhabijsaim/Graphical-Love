@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patheffects as pe
 
-# Use dark background style
 plt.style.use('dark_background')
 
-# Heart shape equation
 t = np.linspace(0, 2 * np.pi, 200)
 x = 16 * np.sin(t)**3
 y = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)
@@ -15,10 +13,8 @@ fig, ax = plt.subplots(figsize=(6, 6))
 fig.patch.set_facecolor('black')
 ax.set_facecolor('black')
 
-# Filled heart (pulsating)
 poly = ax.fill(x, y, color=(1.0, 0.08, 0.3, 0.18))[0]
 
-# Glowing outline
 line, = ax.plot([], [], color=(1.0, 0.2, 0.4), linewidth=3, solid_capstyle='round')
 line.set_path_effects([
     pe.Stroke(linewidth=8, foreground='magenta', alpha=0.15),
@@ -26,17 +22,14 @@ line.set_path_effects([
     pe.Normal()
 ])
 
-# Sparkles setup
 spark = ax.scatter([], [], s=[], c=[], cmap='autumn', edgecolors='none')
 
-# 💬 Add custom text inside heart
-custom_text = "I❤️U DIU"  # 🔁 Change this to anything you want!
+custom_text = "I❤️U DIU"
 text_color = '#30808C'
 text_obj = ax.text(0, 0, custom_text, color=text_color,
                    fontsize=20, fontweight='bold',
                    ha='center', va='center')
 
-# Plot limits and style
 ax.set_xlim(-20, 20)
 ax.set_ylim(-20, 20)
 ax.set_aspect('equal')
@@ -56,14 +49,11 @@ def animate(i):
     if i < 1:
         return line, poly, spark, text_obj
 
-    # Update outline
     line.set_data(x[:i], y[:i])
 
-    # Pulsate fill alpha
     alpha = 0.12 + 0.12 * (0.5 + 0.5 * np.sin(2 * np.pi * i / len(t)))
     poly.set_alpha(alpha)
 
-    # Sparkles near current point
     n = min(12, max(1, i // 5))
     base_x, base_y = x[i % len(x)], y[i % len(y)]
     offsets = np.column_stack([
@@ -83,5 +73,6 @@ ani = animation.FuncAnimation(
     fig, animate, init_func=init,
     frames=len(t), interval=40, blit=False, repeat=True
 )
+
 
 plt.show()
