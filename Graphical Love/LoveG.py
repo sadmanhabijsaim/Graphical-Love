@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patheffects as pe
 
-# Use dark background style
 plt.style.use('dark_background')
 
-# Heart shape equation
 t = np.linspace(0, 2 * np.pi, 200)
 x = 16 * np.sin(t)**3
 y = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)
@@ -72,8 +70,6 @@ ani = animation.FuncAnimation(
     fig, animate, init_func=init,
     frames=len(t), interval=40, blit=False, repeat=False
 )
-
-# Try to save with ffmpeg, fall back to Pillow (GIF), otherwise show the animation.
 from matplotlib.animation import FFMpegWriter, PillowWriter, writers
 
 try:
@@ -88,4 +84,5 @@ try:
 except Exception as e:
     print("⚠️ Could not save animation (no suitable writer):", e)
     print("Displaying animation instead...")
+
     plt.show()
